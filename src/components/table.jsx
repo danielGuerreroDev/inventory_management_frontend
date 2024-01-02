@@ -28,6 +28,10 @@ function DataTable() {
       height: 400,
       overflowY: "auto",
     },
+    sticky_th: {
+      position: "sticky",
+      top: 0
+    }
   };
 
   const createColumns = (id, title) => {
@@ -70,8 +74,8 @@ function DataTable() {
           {isLoading ?
             <ProgressBar animated now={100}/>
             :
-            <Table responsive>
-              <thead>
+            <Table>
+              <thead style={styles.sticky_th}>
                 <tr>
                   <th key="id">ID</th>
                   {headers}
