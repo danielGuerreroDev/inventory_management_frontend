@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -16,8 +17,9 @@ function Menu() {
           />
         </Navbar>
         <Nav className="d-flex flex-row gap-3">
-          <Nav href="#insights">INSIGHTS</Nav>
-          <Nav href="#insights">SELL</Nav>
+          <Link to="/pages/Home">INSIGHTS</Link>
+          <Link to="/pages/Products">STOCK</Link>
+          <Link to="/pages/Home">SELL</Link>
         </Nav>
       </Container>
     </Navbar>

@@ -1,14 +1,9 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Table from "react-bootstrap/Table";
-
+import { useEffect, useState } from "react";
 import Axios from "axios";
 import { backend_address } from "../urls";
-import { useEffect, useState } from "react";
-import { ProgressBar } from "react-bootstrap";
+import DataTable from "../components/Table";
 
-function DataTable() {
+function Products() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,17 +17,6 @@ function DataTable() {
   useEffect(() => {
     getData();
   }, []);
-
-  const styles = {
-    table_height: {
-      height: 400,
-      overflowY: "auto",
-    },
-    sticky_th: {
-      position: "sticky",
-      top: 0
-    }
-  };
 
   const createColumns = (id, title) => {
     return { id, title };
@@ -68,26 +52,8 @@ function DataTable() {
   });
 
   return (
-    <Container>
-      <Row style={styles.table_height}>
-        <Col>
-          {isLoading ?
-            <ProgressBar animated now={100}/>
-            :
-            <Table>
-              <thead style={styles.sticky_th}>
-                <tr>
-                  <th key="id">ID</th>
-                  {headers}
-                </tr>
-              </thead>
-              <tbody>{productsList}</tbody>
-            </Table>
-          }
-        </Col>
-      </Row>
-    </Container>
+    <DataTable headers={headers} isLoading={isLoading} list={productsList} />
   );
 }
 
-export default DataTable;
+export default Products;
