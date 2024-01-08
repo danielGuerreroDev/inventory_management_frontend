@@ -2,4 +2,4 @@
 
 frontend demo based in an inventory management system.
 
-Technologies : react, bootstrap.
+Technologies : react, typescript, bootstrap.
