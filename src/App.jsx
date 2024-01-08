@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router";
 import Home from "./pages/Home";
 import Menu from "./components/Menu";
-import Products from "./pages/Products";
+import Products from "./pages/Stock";
+import SalesOrders from "./pages/Sell";
 
 function App() {
   const routes = [
@@ -16,9 +17,14 @@ function App() {
       page: <Home />,
     },
     {
-      path: "/pages/Products",
+      path: "/pages/Stock",
       exact: false,
       page: <Products />,
+    },
+    {
+      path: "/pages/Sell",
+      exact: false,
+      page: <SalesOrders />,
     },
   ];
 
