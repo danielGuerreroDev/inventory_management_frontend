@@ -5,7 +5,7 @@ import { black, gray, green, red, white } from "../general/colors";
 import { currency } from "../general/formats";
 import DataTable from "../components/Table";
 
-function SalesOrders () {
+function SalesOrders() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -13,12 +13,34 @@ function SalesOrders () {
     Axios.get(`${backend_address}/getSalesOrders`).then((res) => {
       setData(res.data);
       setIsLoading(false);
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    getData()
-  }, []);
+    getData();
+  }, [data]);
+
+  useEffect(() => {
+    const ids = [1, 2, 3, 4];
+    const delivery = ["Pending", "Deliver", "Not shipped"];
+
+    const simulation = (id) => {
+      setTimeout(() => {
+        Axios.put(`${backend_address}/saleOrder/${id}`, {
+          id: id,
+          delivery: delivery[Math.floor(Math.random() * (3 - 1) + 1)],
+        })
+          .then(() => {
+            getData();
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      }, 1500);
+    };
+
+    ids.forEach((v) => simulation(v));
+  }, [isLoading]);
 
   const createColumns = (id, title) => {
     return { id, title };
@@ -37,47 +59,51 @@ function SalesOrders () {
     return <th key={item.id}>{item.title}</th>;
   });
 
-  const orders = data?.sort((a, b) => b.id - a.id).map((item) => {
-    let totalAmount = item?.order_details.map((order) => {
-      return order.product_details.reduce((acc, curr) => acc += curr.price,0);
+  const orders = data
+    ?.sort((a, b) => b.id - a.id)
+    .map((item) => {
+      let totalAmount = item?.order_details.map((order) => {
+        return order.product_details.reduce(
+          (acc, curr) => (acc += curr.price),
+          0
+        );
+      });
+
+      let status = item.order_details.map((item) => {
+        return item.status;
+      });
+
+      let customer = item.customer_details.map((customer) => {
+        return customer.name;
+      });
+
+      let statusColor = {
+        backgroundColor: status == "In stock" ? green : red,
+        border: "1.5px solid white",
+        color: white,
+      };
+
+      let deliveryColor = {
+        backgroundColor: item.delivery == "Deliver" ? green : gray,
+        border: "1.5px solid white",
+        color: item.delivery == "Deliver" ? white : black,
+        transition: "0.5s ease",
+      };
+
+      return (
+        <tr key={item.id}>
+          <td>{item.id}</td>
+          <td>{item.created_date}</td>
+          <td>{customer}</td>
+          <td>{currency.format(totalAmount)}</td>
+          <td>{item.delivery_deadline}</td>
+          <td style={statusColor}>{status}</td>
+          <td style={deliveryColor}>{item.delivery}</td>
+        </tr>
+      );
     });
 
-    let status = item.order_details.map((item) => {
-      return item.status;
-    })
-
-    let customer = item.customer_details.map((customer) => {
-      return customer.name;
-    })
-
-    let statusColor = {
-      backgroundColor: status == 'In stock' ? green : red,
-      border: '1.5px solid white',
-      color: white
-    };
-
-    let deliveryColor = {
-      backgroundColor: item.delivery == 'Deliver' ? green : gray,
-      border: '1.5px solid white',
-      color: item.delivery == 'Deliver' ? white : black
-    };
-
-    return(
-      <tr key={item.id}>
-        <td>{item.id}</td>
-        <td>{item.created_date}</td>
-        <td>{customer}</td>
-        <td>{currency.format(totalAmount)}</td>
-        <td>{item.delivery_deadline}</td>
-        <td style={statusColor}>{status}</td>
-        <td style={deliveryColor}>{item.delivery}</td>
-      </tr>
-    );
-  });
-
-  return(
-    <DataTable headers={headers} isLoading={isLoading} list={orders} />
-  );
+  return <DataTable headers={headers} isLoading={isLoading} list={orders} />;
 }
 
 export default SalesOrders;
