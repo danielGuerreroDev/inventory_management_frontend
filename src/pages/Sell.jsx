@@ -36,7 +36,7 @@ function SalesOrders() {
           .catch((err) => {
             console.log(err.message);
           });
-      }, 1500);
+      }, 800);
     };
 
     ids.forEach((v) => simulation(v));
