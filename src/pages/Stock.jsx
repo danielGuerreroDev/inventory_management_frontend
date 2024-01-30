@@ -3,13 +3,15 @@ import Axios from "axios";
 import { backend_address } from "../urls";
 import { currency } from "../general/formats";
 import DataTable from "../components/Table";
-import Modal from "react-bootstrap/Modal";
 import { black, green, red, white } from "../general/colors";
+import ProductDetails from "../components/ProductDetails";
 
 function Products() {
   const [data, setData] = useState([]);
+  const [disabled, setDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(1);
 
   const getData = () => {
     Axios.get(`${backend_address}/getProducts`).then((res) => {
@@ -21,27 +23,6 @@ function Products() {
   useEffect(() => {
     getData();
   }, []);
-
-  useEffect(() => {
-    const ids = [29, 28, 27, 26, 25, 23, 22, 21, 19, 15, 14, 13, 9, 8 ,6, 5];
-
-    const simulation = (id) => {
-      setTimeout(() => {
-        Axios.put(`${backend_address}/product/${id}`, {
-          id: id,
-          stock: Math.floor(Math.random(1, 30) * 30),
-        })
-          .then(() => {
-            getData();
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-      }, 800);
-    };
-
-    ids.forEach((v) => simulation(v));
-  }, [isLoading]);
 
   const createColumns = (id, title) => {
     return { id, title };
@@ -61,8 +42,22 @@ function Products() {
     return <th key={item.id}>{item.title}</th>;
   });
 
-  const productDetail = () => {
-    return setIsOpen(!isOpen);
+  const enableEditing = () => {
+    setDisabled(false);
+  }
+
+  const openProductDetail = (id) => {
+    setSelectedProduct(id);
+    setIsOpen(!isOpen);
+  };
+
+  const cancelEditing = (x) => {
+    setDisabled(x);
+  };
+
+  const closeProductDetail = () => {
+    setDisabled(true);
+    setIsOpen(!isOpen);
   };
 
   const products = data
@@ -76,7 +71,7 @@ function Products() {
       }
 
       return (
-        <tr key={item.id} onClick={productDetail}>
+        <tr key={item.id} onClick={() => openProductDetail(item.id)}>
           <td>{item.id}</td>
           <td>{item.title}</td>
           <td>{item.category}</td>
@@ -92,9 +87,16 @@ function Products() {
   return (
     <>
       <DataTable headers={headers} isLoading={isLoading} list={products} />
-      <Modal onHide={productDetail} show={isOpen} size="lg">
-        <h1>Hola</h1>
-      </Modal>
+      <ProductDetails
+        cancelEditing={cancelEditing}
+        closeProductDetail={closeProductDetail}
+        disabled={disabled}
+        enableEditing={enableEditing}
+        getData={getData}
+        isOpen={isOpen}
+        selectedProduct={selectedProduct}
+        setDisabled={setDisabled}
+      />
     </>
   );
 }
