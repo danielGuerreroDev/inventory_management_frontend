@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import Home from "./pages/Home";
+import Insights from "./pages/Insights";
 import Menu from "./components/Menu";
 import Products from "./pages/Stock";
 import SalesOrders from "./pages/Sell";
@@ -12,9 +12,9 @@ function App() {
       page: null,
     },
     {
-      path: "/pages/Home",
+      path: "/pages/Insights",
       exact: false,
-      page: <Home />,
+      page: <Insights />,
     },
     {
       path: "/pages/Stock",

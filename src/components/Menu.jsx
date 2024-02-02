@@ -17,7 +17,7 @@ function Menu() {
           />
         </Navbar>
         <Nav className="d-flex flex-row gap-3">
-          <Link to="/pages/Home">INSIGHTS</Link>
+          <Link to="/pages/Insights">INSIGHTS</Link>
           <Link to="/pages/Stock">STOCK</Link>
           <Link to="/pages/Sell">SELL</Link>
         </Nav>
