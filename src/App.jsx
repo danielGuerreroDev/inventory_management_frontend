@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
-import Insights from "./pages/Insights";
-import Menu from "./components/Menu";
+import MainInsights from "./pages/Insights";
+import MainMenu from "./components/Menu";
 import Products from "./pages/Stock";
 import SalesOrders from "./pages/Sell";
 
@@ -14,7 +14,7 @@ function App() {
     {
       path: "/pages/Insights",
       exact: false,
-      page: <Insights />,
+      page: <MainInsights />,
     },
     {
       path: "/pages/Stock",
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <>
-      <Menu />
+      <MainMenu />
       <Routes>
         {routes.map((route, index) => (
           <Route

@@ -30,7 +30,7 @@ interface props {
   setDisabled: (param) => {};
 }
 
-function ProductDetails({
+function ItemDetails({
   closeProductDetail,
   disabled,
   enableEditing,
@@ -213,7 +213,7 @@ function ProductDetails({
     await Axios.put(
       `${backend_address}/product/${selectedProduct}`,
       clonedDataSingleProduct
-    ).then((res) => {
+    ).then(() => {
       getData();
       getDataSingleProduct();
       setClonedDataSingleProduct({});
@@ -372,22 +372,17 @@ function ProductDetails({
             </Col>
           </Row>
         </Container>
-        {/* <p className="placeholder-glow">
-      <span className="placeholder col-12"></span>
-    </p> */}
       </Modal>
       <ToastContainer position="bottom-start">
         <Toast
           autohide={true}
-          bg="success" 
+          bg="success"
           delay={3000}
           onClose={() => setShowNotification(false)}
           role="alert"
           show={showNotification}
         >
-          <ToastBody
-            className="d-flex align-items-center justify-content-center text-white"
-          >
+          <ToastBody className="d-flex align-items-center justify-content-center text-white">
             Your changes have been saved.
           </ToastBody>
         </Toast>
@@ -396,4 +391,4 @@ function ProductDetails({
   );
 }
 
-export default ProductDetails;
+export default ItemDetails;
