@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-function Menu() {
+function MainMenu() {
   return (
     <Navbar className="bg-body-tertiary" sticky="top">
       <Container className="d-flex justify-content-start gap-5">
@@ -26,4 +26,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default MainMenu;

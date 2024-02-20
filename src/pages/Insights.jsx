@@ -15,7 +15,7 @@ import {
 } from "recharts";
 import { green } from "../general/colors";
 
-function Insights() {
+function MainInsights() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -70,4 +70,4 @@ function Insights() {
   );
 }
 
-export default Insights;
+export default MainInsights;
