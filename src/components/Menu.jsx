@@ -13,7 +13,7 @@ function MainMenu() {
             className="d-inline-block align-top"
             height={50}
             width={50}
-            src="src/assets/logo.svg"
+            src="../src/assets/logo.svg"
           />
         </Navbar>
         <Nav className="d-flex flex-row gap-3">
