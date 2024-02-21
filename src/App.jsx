@@ -9,7 +9,7 @@ function App() {
     {
       path: "/",
       exact: false,
-      page: null,
+      page: <Products />,
     },
     {
       path: "/pages/Insights",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Axios from "axios";
 import { backend_address } from "../urls";
 import { black, green, red, white } from "../general/colors";
@@ -15,8 +15,25 @@ function Products() {
   const [endLimit, setEndLimit] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(1);
+  const [sortById, setSortById] = useState(true);
   const [startLimit, setStartLimit] = useState(0);
+
+  const styles = {
+    inputContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-around'
+    },
+    inputSearch: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  };
 
   const getData = () => {
     Axios.get(`${backend_address}/getProducts`).then((res) => {
@@ -52,10 +69,38 @@ function Products() {
     setDisabled(false);
   };
 
+  const filteredData = data?.sort((a, b) => sortById ? b.id - a.id : a.id - b.id)
+  .filter((product) => product.title.toLowerCase().includes(searchTerm))
+  .map((item) => {
+    let changeAnimation = {
+      backgroundColor: item.stock < 10 ? red : green,
+      border: "1.5px solid white",
+      color: item.stock < 10 ? white : black,
+      transition: "0.5s ease",
+    };
+
+    return (
+      <tr key={item.id} onClick={() => openProductDetail(item.id)}>
+        <td>{item.id}</td>
+        <td>{item.title}</td>
+        <td>{item.category}</td>
+        <td>{item.brand}</td>
+        <td>{item.rating}</td>
+        <td>{item.discountPercentage}</td>
+        <td>{currency.format(item.price)}</td>
+        <td style={changeAnimation}>{item.stock}</td>
+      </tr>
+    );
+  });
+
   const first = () => {
     setCurrentPage(1);
     setStartLimit(0);
     setEndLimit(10);
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
   };
 
   const tableHeading = [
@@ -69,7 +114,25 @@ function Products() {
   ];
 
   const headers = tableHeading.map((item) => {
-    return <th key={item.id}>{item.title}</th>;
+    return (
+      item.title == 'Title'
+      ? 
+        <Fragment key='titleFragment'>
+          <th key={item.id} style={styles.inputContainer}>
+            {item.title}
+            <div>
+              <input
+                onChange={handleSearch}
+                placeholder="Search by title"
+                style={styles.inputSearch} 
+                type="text"
+              />
+            </div>
+          </th>
+        </Fragment>
+      : <th key={item.id}>{item.title}</th>
+      
+    );
   });
 
   const last = () => {
@@ -87,6 +150,10 @@ function Products() {
   const openProductDetail = (id) => {
     setSelectedProduct(id);
     setIsOpen(!isOpen);
+  };
+
+  const orderById = () => {
+    setSortById(!sortById);
   };
 
   const pagesDivision = Math.ceil(data?.length / 10);
@@ -109,8 +176,8 @@ function Products() {
     setEndLimit(10 * (currentPage - 1));
   };
 
-  const products = data
-    ?.sort((a, b) => b.id - a.id)
+  const products = data?.sort((a, b) => sortById ? b.id - a.id : a.id - b.id)
+    .slice(startLimit, endLimit)
     .map((item) => {
       let changeAnimation = {
         backgroundColor: item.stock < 10 ? red : green,
@@ -131,20 +198,29 @@ function Products() {
           <td style={changeAnimation}>{item.stock}</td>
         </tr>
       );
-    })
-    .slice(startLimit, endLimit);
+    });
 
   return (
     <>
-      <DataTable headers={headers} isLoading={isLoading} list={products} />
-      <Paging
-        currentPage={currentPage}
-        first={first}
-        last={last}
-        next={next}
-        pages={pages}
-        prev={prev}
+      <DataTable
+        headers={headers} 
+        isLoading={isLoading} 
+        list={searchTerm ? filteredData : products}
+        orderById={orderById}
+        sort
+        sortById={sortById}
       />
+      {
+        !searchTerm &&
+        <Paging
+          currentPage={currentPage}
+          first={first}
+          last={last}
+          next={next}
+          pages={pages}
+          prev={prev}
+        />
+      }
       <ItemDetails
         cancelEditing={cancelEditing}
         closeProductDetail={closeProductDetail}
