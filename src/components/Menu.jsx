@@ -1,6 +1,7 @@
 import { black, green } from "../general/colors"
 import Container from "react-bootstrap/Container";
 import { Link } from "react-router-dom";
+import { MdOutlineInventory } from "react-icons/md";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
@@ -57,14 +58,8 @@ function MainMenu() {
   return (
     <Navbar className="bg-body-tertiary" sticky="top">
       <Container className="d-flex justify-content-start gap-5">
-        <Navbar navbar-brand="true" href="#home">
-          <img
-            alt="logo"
-            className="d-inline-block align-top"
-            height={50}
-            width={50}
-            src="../src/assets/logo.svg"
-          />
+        <Navbar navbar-brand="true">
+        <MdOutlineInventory size={40} />
         </Navbar>
         <Nav className="d-flex flex-row gap-3">
           {links}
