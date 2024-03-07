@@ -40,7 +40,7 @@ function MainInsights() {
     title: item["title"],
     stock: item["stock"],
   }));
-
+  
   return (
     <Container>
       <Row style={styles.chart_container}>

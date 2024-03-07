@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Axios from "axios";
 import { backend_address } from "../urls";
 import Card from "react-bootstrap/Card";
@@ -70,17 +70,17 @@ function ItemDetails({
     },
   };
 
-  const getBrands = useCallback(() => {
+  const getBrands = () => {
     Axios.get(`${backend_address}/getBrands`).then((res) => {
       setBrands(res.data);
     });
-  }, []);
+  };
 
-  const getCategories = useCallback(() => {
+  const getCategories = () => {
     Axios.get(`${backend_address}/getCategories`).then((res) => {
       setCategories(res.data);
     });
-  }, []);
+  };
 
   const getDataSingleProduct = () => {
     Axios.get(`${backend_address}/getProduct/${selectedProduct}`).then(
@@ -90,10 +90,13 @@ function ItemDetails({
     );
   };
 
+  useMemo(() => {
+    getBrands();
+    getCategories();
+  }, []);
+
   useEffect(() => {
     getDataSingleProduct();
-    getCategories();
-    getBrands();
   }, [selectedProduct]);
 
   const brandsMapped = brands?.map((brand) => {
