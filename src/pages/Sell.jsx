@@ -18,29 +18,7 @@ function SalesOrders() {
 
   useEffect(() => {
     getData();
-  }, [data]);
-
-  useEffect(() => {
-    const ids = [1, 2, 3, 4];
-    const delivery = ["Pending", "Deliver", "Not shipped"];
-
-    const simulation = (id) => {
-      setTimeout(() => {
-        Axios.put(`${backend_address}/saleOrder/${id}`, {
-          id: id,
-          delivery: delivery[Math.floor(Math.random() * (3 - 1) + 1)],
-        })
-          .then(() => {
-            getData();
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
-      }, 800);
-    };
-
-    ids.forEach((v) => simulation(v));
-  }, [isLoading]);
+  }, []);
 
   const createColumns = (id, title) => {
     return { id, title };

@@ -31,7 +31,7 @@ function DataTable({ headers, isLoading, list, orderById, sort, sortById }: prop
       overflowY: "auto",
     },
   };
-
+  
   return (
     <Container>
       <Row style={styles.table_height}>
