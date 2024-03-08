@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import { backend_address } from "../urls";
 import Card from "react-bootstrap/Card";
@@ -90,14 +90,11 @@ function ItemDetails({
     );
   };
 
-  useMemo(() => {
+  useEffect(() => {
     getBrands();
     getCategories();
-  }, []);
-
-  useEffect(() => {
     getDataSingleProduct();
-  }, [selectedProduct]);
+  }, []);
 
   const brandsMapped = brands?.map((brand) => {
     if (brand.name != dataSingleProduct?.brand) {

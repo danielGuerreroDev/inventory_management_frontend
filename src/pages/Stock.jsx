@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Axios from "axios";
 import { backend_address } from "../urls";
 import { black, green, red, white } from "../general/colors";
@@ -42,7 +42,7 @@ function Products() {
     });
   };
 
-  useMemo(() => {
+  useEffect(() => {
     getData();
   }, []);
 

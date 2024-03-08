@@ -3,7 +3,7 @@ import Axios from "axios";
 import { backend_address } from "../urls";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-import ProgressBar from "react-bootstrap/ProgressBar";
+import LinearProgress from "../components/Progress";
 import Row from "react-bootstrap/Row";
 import {
   Bar,
@@ -44,7 +44,7 @@ function MainInsights() {
   return (
     <Container>
       <Row style={styles.chart_container}>
-        {isLoading && <ProgressBar animated now={100} />}
+        {isLoading && <LinearProgress />}
         <Col className="d-flex align-items-center justify-content-center">
           <BarChart data={dataChart} height={300} width={900}>
             <XAxis 
