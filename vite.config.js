@@ -20,6 +20,6 @@ const rewriteSlashToIndexHtml = () => {
 }
 
 export default defineConfig({
-  appType: 'spa',
+  appType: 'mpa',
   plugins: [react(), rewriteSlashToIndexHtml()],
 })
