@@ -9,9 +9,9 @@ const rewriteSlashToIndexHtml = () => {
     apply: 'serve',
     enforce: 'post',
     configureServer(server) {
-      server.middlewares.use('/', (req, _, next) => {
+      server.middlewares.use('index.html', (req, _, next) => {
         if (urls.some((v) => v === req.url)) {
-          req.url = '/index.html'
+          req.url = 'index.html'
         }
         next()
       })
