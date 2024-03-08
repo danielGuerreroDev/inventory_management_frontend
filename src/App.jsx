@@ -8,22 +8,22 @@ function App() {
   const routes = [
     {
       path: "/",
-      exact: false,
+      exact: true,
       page: <Products />,
     },
     {
       path: "/pages/Insights",
-      exact: false,
+      exact: true,
       page: <MainInsights />,
     },
     {
       path: "/pages/Stock",
-      exact: false,
+      exact: true,
       page: <Products />,
     },
     {
       path: "/pages/Sell",
-      exact: false,
+      exact: true,
       page: <SalesOrders />,
     },
   ];

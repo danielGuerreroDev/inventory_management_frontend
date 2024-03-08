@@ -7,7 +7,9 @@ import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
 
 function MainMenu() {
-  const [active, setActive] = useState('Stock');
+  const pathname = window.location.pathname;
+  const currentPageName = pathname.split('/')[2];
+  const [active, setActive] = useState(currentPageName || 'Stock');
 
   const styles = {
     link: {
