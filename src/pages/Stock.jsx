@@ -21,6 +21,9 @@ function Products() {
   const [startLimit, setStartLimit] = useState(0);
 
   const styles = {
+    cursorPointer: {
+      cursor: 'pointer'
+    },
     inputContainer: {
       display: 'flex',
       flexDirection: 'row',
@@ -80,7 +83,11 @@ function Products() {
     };
 
     return (
-      <tr key={item.id} onClick={() => openProductDetail(item.id)}>
+      <tr 
+        key={item.id}
+        onClick={() => openProductDetail(item.id)}
+        style={styles.cursorPointer} 
+      >
         <td>{item.id}</td>
         <td>{item.title}</td>
         <td>{item.category}</td>
@@ -187,7 +194,11 @@ function Products() {
       };
 
       return (
-        <tr key={item.id} onClick={() => openProductDetail(item.id)}>
+        <tr 
+          key={item.id}
+          onClick={() => openProductDetail(item.id)}
+          style={styles.cursorPointer}
+        >
           <td>{item.id}</td>
           <td>{item.title}</td>
           <td>{item.category}</td>

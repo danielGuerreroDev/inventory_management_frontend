@@ -42,7 +42,7 @@ function DataTable({ headers, isLoading, list, orderById, sort, sortById }: prop
               <LinearProgress />
             </>
           ) : (
-            <Table>
+            <Table hover>
               <thead style={styles.sticky_th}>
                 <tr>
                   <th key="id">

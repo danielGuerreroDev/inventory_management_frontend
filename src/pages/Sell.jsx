@@ -9,6 +9,12 @@ function SalesOrders() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const styles = {
+    cursorNotAllowed: {
+      cursor: 'not-allowed'
+    }
+  };
+
   const getData = () => {
     Axios.get(`${backend_address}/getSalesOrders`).then((res) => {
       setData(res.data);
@@ -69,7 +75,7 @@ function SalesOrders() {
       };
 
       return (
-        <tr key={item.id}>
+        <tr key={item.id} style={styles.cursorNotAllowed}>
           <td>{item.id}</td>
           <td>{item.created_date}</td>
           <td>{customer}</td>
