@@ -1,2 +1,2 @@
-export const frontend_address = "https://im-frontend.onrender.com";
-export const backend_address = "https://im-backend-rdbd.onrender.com";
+export const frontend_address = "https://inventory-management-frontend-lilac.vercel.app";
+export const backend_address = "https://inventory-management-backend-livid.vercel.app";
